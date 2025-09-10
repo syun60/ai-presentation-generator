@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative">
       <div className="fixed inset-0 opacity-30 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: 'radial-gradient(circle at 25px 25px, #4F46E5 2px, transparent 0)',
@@ -37,7 +37,7 @@ export default function Home() {
       <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-indigo-400/5 via-purple-400/5 to-transparent rounded-full blur-3xl"></div>
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="container mx-auto px-4 py-8 pb-16 relative z-10">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-pink-400/10 blur-3xl rounded-full scale-150 floating-animation"></div>

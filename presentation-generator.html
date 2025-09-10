@@ -20,8 +20,11 @@
         }
     </script>
     <style>
-        body {
+        html, body {
             font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
+            height: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
         
         .glass-effect {
@@ -124,7 +127,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative">
     <!-- Background Effects -->
     <div class="fixed inset-0 opacity-30 pointer-events-none">
         <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25px 25px, #4F46E5 2px, transparent 0); background-size: 50px 50px;"></div>
@@ -132,7 +135,7 @@
     <div class="absolute top-20 left-20 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
     <div class="absolute bottom-20 right-20 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     
-    <div class="container mx-auto px-4 py-8 relative z-10">
+    <div class="container mx-auto px-4 py-8 pb-16 relative z-10">
         <div class="max-w-5xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-12 relative">
