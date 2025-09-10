@@ -1,103 +1,89 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import PresentationForm from '@/components/PresentationForm';
+import GeneratedContent from '@/components/GeneratedContent';
+import { generatePresentation } from '@/data/templates';
+import { PresentationInput, GeneratedPresentation } from '@/types/presentation';
+import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [presentation, setPresentation] = useState<GeneratedPresentation | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleGenerate = async (input: PresentationInput) => {
+    setIsGenerating(true);
+    
+    // リアルな生成時間をシミュレート
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const generated = generatePresentation(input);
+    setPresentation(generated);
+    setIsGenerating(false);
+  };
+
+  const handleReset = () => {
+    setPresentation(null);
+  };
+
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+      <div className="fixed inset-0 opacity-30 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(circle at 25px 25px, #4F46E5 2px, transparent 0)',
+          backgroundSize: '50px 50px'
+        }}></div>
+      </div>
+      <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-indigo-400/5 via-purple-400/5 to-transparent rounded-full blur-3xl"></div>
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-pink-400/10 blur-3xl rounded-full scale-150 floating-animation"></div>
+            <div className="relative z-10">
+              <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 leading-tight">
+                🎯 AI プレゼン資料ジェネレーター
+              </h1>
+              <p className="text-gray-600 text-xl md:text-2xl font-medium leading-relaxed max-w-3xl mx-auto">
+                最新のAI技術で、プロフェッショナルなプレゼンテーション構成を自動生成
+              </p>
+              <div className="flex justify-center mt-8 space-x-6">
+                <div className="flex items-center text-gray-600">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                  <span className="font-medium">✨ AIパワード</span>
+                </div>
+                <div className="flex items-center text-gray-600">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-2 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                  <span className="font-medium">⚡ 高速生成</span>
+                </div>
+                <div className="flex items-center text-gray-600">
+                  <div className="w-3 h-3 bg-purple-500 rounded-full mr-2 animate-pulse" style={{animationDelay: '1s'}}></div>
+                  <span className="font-medium">🎨 プロ級</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {!presentation ? (
+            <PresentationForm onGenerate={handleGenerate} isGenerating={isGenerating} />
+          ) : (
+            <div className="space-y-6">
+              <div className="flex justify-center mb-8">
+                <button
+                  onClick={handleReset}
+                  className="group flex items-center px-8 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105 neon-glow"
+                >
+                  <span className="mr-3 text-2xl group-hover:animate-spin">🔄</span>
+                  新しいプレゼンを作成
+                </button>
+              </div>
+              <GeneratedContent presentation={presentation} />
+            </div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      <Toaster position="top-right" />
+    </main>
   );
 }
